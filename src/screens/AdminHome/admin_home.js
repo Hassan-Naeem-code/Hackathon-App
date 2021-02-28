@@ -1,59 +1,59 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import AllUser from './RoleCompanyStudent/allUser';
-import UserDetail from './RoleCompanyStudent/userDetail';
-import UserProfile from './RoleCompanyStudent/profile/userProfile';
-import EditProfile from './RoleCompanyStudent/profile/editProfile';
+import StudentCom from './student';
+import Compnay from './company';
+import StudentDetail from './studentDetail';
+import CompanyDetail from './companyDetail';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const {Screen, Navigator} = Tab;
 
-const Homepage = () => {
+const Company = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="AllUser"
-        component={AllUser}
+        name="Compnay"
+        component={Compnay}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="UserDetail"
-        component={UserDetail}
+        name="CompanyDetail"
+        component={CompanyDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 };
 
-const User = () => {
+const Student = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="UserProfile"
-        component={UserProfile}
+        name="StudentCom"
+        component={StudentCom}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="EditProfile"
-        component={EditProfile}
+        name="StudentDetail"
+        component={StudentDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 };
 
-const Home = () => {
-  return (
-    <Navigator
+const adminHome = ()=> {
+    return (
+        <Navigator
     screenOptions={({route}) => ({
       tabBarIcon: ({focused, color, size}) => {
         let iconName;
 
-        if (route.name === 'Homepage') {
+        if (route.name === 'Company') {
           iconName = focused ? 'home' : 'home';
-        }  else if (route.name === 'User') {
+        }  else if (route.name === 'Student') {
           iconName = focused ? 'user' : 'user-o';
         }
 
@@ -69,9 +69,9 @@ const Home = () => {
         borderColor: 'white',
       },
     }}>
-    <Screen name="Homepage" component={Homepage} />
-    <Screen name="User" component={User} />
+    <Screen name="Company" component={Company} />
+    <Screen name="Student" component={Student} />
   </Navigator>
-  );
-};
-export default Home;
+    )
+}
+export default adminHome;

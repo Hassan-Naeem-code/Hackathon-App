@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import {Provider} from 'react-redux';
 // import {GoogleSignin} from '@react-native-community/google-signin';
 import store, {persistor} from './Store/index';
-import Navigation from './src/screens/home';
+import Navigation from './src/navigation/navigation';
 import {PersistGate} from 'redux-persist/integration/react';
 // import Splash from './Screens/Splash Screen/splash';
 

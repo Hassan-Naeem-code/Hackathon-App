@@ -6,6 +6,8 @@ import {
   USER_REGISTERED,
   USER_LOGGED_OUT,
   UPDATE_USER,
+  ALL_USERS,
+  GET_COMPANY
 } from '../constants/actiontypes';
 import {ToastAndroid} from 'react-native';
 
@@ -176,7 +178,7 @@ export function signUpUserEmailPassword(user, navigation) {
               type: USER_REGISTERED,
               payload: user,
             });
-            navigation.navigate('Home');
+            navigation.navigate('Decision');
           })
           .catch((error) => {
             ToastAndroid.show('Unsuccessfull Signed Up...', 2000);
@@ -250,8 +252,6 @@ export function signOut(navigation) {
         });
       });
     ToastAndroid.show('User Sign Out Successfully', 2000);
-    navigation.navigate('Login', {role: 'Customer'});
-    console.log('Navigation we get here is', navigation);
   };
 }
 
@@ -322,4 +322,65 @@ export function updateCurrentUserInfoCustomer(userInfo, navigation) {
     ToastAndroid.show('User Profile Update Successfully', 2000);
     navigation.navigate('UserProfile');
   };
+}
+
+export function loginUser(user) {
+  return (dispatch) => {
+    auth()
+      .signInWithEmailAndPassword(user.email, user.password)
+      .then((success) => {
+        ToastAndroid.show('Successfully Sign In', 2000);
+      })
+      .catch((error) => {
+        ToastAndroid.show('Unsuccessfull Sign In', 2000);
+      });
+  };
+}
+
+export function fetchAllUsers(uid){
+  return async (dispatch) => {
+    let userFound = await firestore()
+      .collection('users')
+      .where('uid', '!=', uid).where('role','==','student')
+      .get();
+    userFound.forEach(function (doc) {
+      let user = doc.data();
+      user.id = doc.id;
+      dispatch({type: ALL_USERS, payload: user});
+    });
+  };
+}
+export function fetUserInfoSecond(uid){
+  return async (dispatch) => {
+    let userFound = await firestore()
+      .collection('users')
+      .where('uid', '!=', uid).where('role','==','company')
+      .get();
+    userFound.forEach(function (doc) {
+      let user = doc.data();
+      user.id = doc.id;
+      dispatch({type: ALL_USERS, payload: user});
+    });
+  };
+}
+
+export function updateUserInfo(user,navigation){
+  return async (dispatch)=>{
+    await firestore().collection('users').doc(user.id).set({
+      contactNumber: user.number,
+      email : user.email,
+      name: user.name,
+      address: user.address,
+      number: user.number,
+      coverImage: user.coverImage,
+      profileImage: user.profileImage,
+      photo: user.photo,
+      education: user.education,
+      uid : user.uid,
+      id: user.id
+    });
+    dispatch({type: USER_REGISTERED, payload: user});
+    ToastAndroid.show('Profile Edit Successfully', 2000);
+    navigation.navigate('UserProfile');
+  }
 }

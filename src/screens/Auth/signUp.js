@@ -8,11 +8,11 @@ import {
   StyleSheet,
   Alert,
   ToastAndroid,
+  Picker
 } from 'react-native';
 // import {add} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import {signUpUserEmailPassword} from '../../../Store/actions/auth';
-import {Picker} from '@react-native-picker/picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const Signup = ({navigation}) => {
   const dispatch = useDispatch();
